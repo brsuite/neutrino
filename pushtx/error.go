@@ -89,7 +89,7 @@ func IsBroadcastError(err error, codes ...BroadcastErrorCode) bool {
 func ParseBroadcastError(msg *wire.MsgReject, peerAddr string) *BroadcastError {
 	// We'll determine the appropriate broadcast error code by looking at
 	// the reject's message code and reason. The only reject codes returned
-	// from peers (bitcoind and brond) when attempting to accept a
+	// from peers (brocoind and brond) when attempting to accept a
 	// transaction into their mempool are:
 	//   RejectInvalid, RejectNonstandard, RejectInsufficientFee,
 	//   RejectDuplicate
@@ -102,7 +102,7 @@ func ParseBroadcastError(msg *wire.MsgReject, peerAddr string) *BroadcastError {
 	case msg.Code == wire.RejectInsufficientFee:
 		code = InsufficientFee
 
-	// The cases below apply for reject messages sent from bitcoind peers.
+	// The cases below apply for reject messages sent from brocoind peers.
 	//
 	// If the transaction double spends an unconfirmed transaction in the
 	// peer's mempool, then we'll deem it as invalid.

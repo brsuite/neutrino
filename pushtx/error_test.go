@@ -48,7 +48,7 @@ func TestParseBroadcastErrorCode(t *testing.T) {
 			code: pushtx.InsufficientFee,
 		},
 		{
-			name: "bitcoind mempool double spend",
+			name: "brocoind mempool double spend",
 			msg: &wire.MsgReject{
 				Code:   wire.RejectDuplicate,
 				Reason: "txn-mempool-conflict",
@@ -56,7 +56,7 @@ func TestParseBroadcastErrorCode(t *testing.T) {
 			code: pushtx.Invalid,
 		},
 		{
-			name: "bitcoind transaction in mempool",
+			name: "brocoind transaction in mempool",
 			msg: &wire.MsgReject{
 				Code:   wire.RejectDuplicate,
 				Reason: "txn-already-in-mempool",
@@ -64,7 +64,7 @@ func TestParseBroadcastErrorCode(t *testing.T) {
 			code: pushtx.Mempool,
 		},
 		{
-			name: "bitcoind transaction in chain",
+			name: "brocoind transaction in chain",
 			msg: &wire.MsgReject{
 				Code:   wire.RejectDuplicate,
 				Reason: "txn-already-known",

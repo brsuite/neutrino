@@ -50,7 +50,7 @@ func createTestBlockHeaderChain(numHeaders uint32) []BlockHeader {
 	blockHeaders := make([]BlockHeader, numHeaders)
 	prevHeader := &chaincfg.SimNetParams.GenesisBlock.Header
 	for i := uint32(1); i <= numHeaders; i++ {
-		bitcoinHeader := &wire.BlockHeader{
+		brocoinHeader := &wire.BlockHeader{
 			Bits:      uint32(rand.Int31()),
 			Nonce:     uint32(rand.Int31()),
 			Timestamp: prevHeader.Timestamp.Add(time.Minute * 1),
@@ -58,11 +58,11 @@ func createTestBlockHeaderChain(numHeaders uint32) []BlockHeader {
 		}
 
 		blockHeaders[i-1] = BlockHeader{
-			BlockHeader: bitcoinHeader,
+			BlockHeader: brocoinHeader,
 			Height:      i,
 		}
 
-		prevHeader = bitcoinHeader
+		prevHeader = brocoinHeader
 	}
 
 	return blockHeaders

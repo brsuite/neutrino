@@ -16,10 +16,10 @@ var (
 	// contains the indexes for the various header types.
 	indexBucket = []byte("header-index")
 
-	// bitcoinTip is the key which tracks the "tip" of the block header
+	// brocoinTip is the key which tracks the "tip" of the block header
 	// chain. The value of this key will be the current block hash of the
 	// best known chain that we're synced to.
-	bitcoinTip = []byte("bitcoin")
+	brocoinTip = []byte("brocoin")
 
 	// regFilterTip is the key which tracks the "tip" of the regular
 	// compact filter header chain. The value of this key will be the
@@ -43,7 +43,7 @@ var (
 type HeaderType uint8
 
 const (
-	// Block is the header type that represents regular Bitcoin block
+	// Block is the header type that represents regular Brocoin block
 	// headers.
 	Block HeaderType = iota
 
@@ -68,7 +68,7 @@ const (
 	// compromise between memory usage and access time. 2 bytes (=max 65535
 	// sub buckets) seems to be the sweet spot (-50% memory usage,
 	// +30% access time). We take the bytes from the beginning of the byte-
-	// serialized hash since all Bitcoin hashes are reverse-serialized when
+	// serialized hash since all Brocoin hashes are reverse-serialized when
 	// displayed as strings. That means the leading zeroes of a block hash
 	// are actually at the end of the byte slice.
 	numSubBucketBytes = 2
@@ -165,7 +165,7 @@ func (h *headerIndex) addHeaders(batch headerBatch) error {
 		// TODO(roasbeef): only need block tip?
 		switch h.indexType {
 		case Block:
-			tipKey = bitcoinTip
+			tipKey = brocoinTip
 		case RegularFilter:
 			tipKey = regFilterTip
 		default:
@@ -255,7 +255,7 @@ func (h *headerIndex) chainTipWithTx(tx walletdb.ReadTx) (*chainhash.Hash,
 	// we'll grab the particular key that tracks the chain tip.
 	switch h.indexType {
 	case Block:
-		tipKey = bitcoinTip
+		tipKey = brocoinTip
 	case RegularFilter:
 		tipKey = regFilterTip
 	default:
@@ -297,7 +297,7 @@ func (h *headerIndex) truncateIndex(newTip *chainhash.Hash, delete bool) error {
 		// we need to update.
 		switch h.indexType {
 		case Block:
-			tipKey = bitcoinTip
+			tipKey = brocoinTip
 		case RegularFilter:
 			tipKey = regFilterTip
 		default:

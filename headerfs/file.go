@@ -108,7 +108,7 @@ func (h *blockHeaderStore) readHeader(height uint32) (wire.BlockHeader, error) {
 	}
 	headerReader := bytes.NewReader(rawHeader)
 
-	// Finally, decode the raw bytes into a proper bitcoin header.
+	// Finally, decode the raw bytes into a proper brocoin header.
 	if err := header.Deserialize(headerReader); err != nil {
 		return header, err
 	}

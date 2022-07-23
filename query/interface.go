@@ -92,7 +92,7 @@ type Progress struct {
 	Progressed bool
 }
 
-// Request is the main struct that defines a bitcoin network query to be sent to
+// Request is the main struct that defines a brocoin network query to be sent to
 // connected peers.
 type Request struct {
 	// Req is the message request to send.
@@ -113,7 +113,7 @@ type Request struct {
 }
 
 // Dispatcher is an interface defining the API for dispatching queries to
-// bitcoin peers.
+// brocoin peers.
 type Dispatcher interface {
 	// Query distributes the slice of requests to the set of connected
 	// peers. It returns an error channel where the final result of the
@@ -125,12 +125,12 @@ type Dispatcher interface {
 // Peer is the interface that defines the methods needed by the query package
 // to be able to make requests and receive responses from a network peer.
 type Peer interface {
-	// QueueMessageWithEncoding adds the passed bitcoin message to the peer
+	// QueueMessageWithEncoding adds the passed brocoin message to the peer
 	// send queue.
 	QueueMessageWithEncoding(msg wire.Message, doneChan chan<- struct{},
 		encoding wire.MessageEncoding)
 
-	// SubscribeRecvMsg adds a OnRead subscription to the peer. All bitcoin
+	// SubscribeRecvMsg adds a OnRead subscription to the peer. All brocoin
 	// messages received from this peer will be sent on the returned
 	// channel. A closure is also returned, that should be called to cancel
 	// the subscription.

@@ -57,14 +57,14 @@ type newPeerMsg struct {
 	peer *ServerPeer
 }
 
-// invMsg packages a bitcoin inv message and the peer it came from together
+// invMsg packages a brocoin inv message and the peer it came from together
 // so the block handler has access to that information.
 type invMsg struct {
 	inv  *wire.MsgInv
 	peer *ServerPeer
 }
 
-// headersMsg packages a bitcoin headers message and the peer it came from
+// headersMsg packages a brocoin headers message and the peer it came from
 // together so the block handler has access to that information.
 type headersMsg struct {
 	headers *wire.MsgHeaders
@@ -94,7 +94,7 @@ type blockManagerCfg struct {
 	// the connected peers.
 	TimeSource blockchain.MedianTimeSource
 
-	// QueryDispatcher is used to make queries to connected Bitcoin peers.
+	// QueryDispatcher is used to make queries to connected Brocoin peers.
 	QueryDispatcher query.Dispatcher
 
 	// BanPeer bans and disconnects the given peer.
@@ -212,7 +212,7 @@ type blockManager struct { // nolint:maligned
 	blocksPerRetarget   int32 // target timespan / target time per block
 }
 
-// newBlockManager returns a new bitcoin block manager.  Use Start to begin
+// newBlockManager returns a new brocoin block manager.  Use Start to begin
 // processing asynchronous block and inv updates.
 func newBlockManager(cfg *blockManagerCfg) (*blockManager, error) {
 
@@ -2801,7 +2801,7 @@ func (b *blockManager) calcNextRequiredDifficulty(newBlockTime time.Time,
 	// Calculate new target difficulty as:
 	//  currentDifficulty * (adjustedTimespan / targetTimespan)
 	// The result uses integer division which means it will be slightly
-	// rounded down.  Bitcoind also uses integer division to calculate this
+	// rounded down.  Brocoind also uses integer division to calculate this
 	// result.
 	oldTarget := blockchain.CompactToBig(lastNode.Header.Bits)
 	newTarget := new(big.Int).Mul(oldTarget, big.NewInt(adjustedTimespan))

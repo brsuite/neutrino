@@ -142,7 +142,7 @@ func newHeaderStore(db walletdb.DB, filePath string,
 }
 
 // blockHeaderStore is an implementation of the BlockHeaderStore interface, a
-// fully fledged database for Bitcoin block headers. The blockHeaderStore
+// fully fledged database for Brocoin block headers. The blockHeaderStore
 // combines a flat file to store the block headers with a database instance for
 // managing the index into the set of flat files.
 type blockHeaderStore struct {
@@ -355,7 +355,7 @@ func (h *blockHeaderStore) RollbackLastBlock() (*BlockStamp, error) {
 	}, nil
 }
 
-// BlockHeader is a Bitcoin block header that also has its height included.
+// BlockHeader is a Brocoin block header that also has its height included.
 type BlockHeader struct {
 	*wire.BlockHeader
 
@@ -481,7 +481,7 @@ func (h *blockHeaderStore) LatestBlockLocator() (blockchain.BlockLocator, error)
 }
 
 // BlockLocatorFromHash computes a block locator given a particular hash. The
-// standard Bitcoin algorithm to compute block locators are employed.
+// standard Brocoin algorithm to compute block locators are employed.
 func (h *blockHeaderStore) BlockLocatorFromHash(hash *chainhash.Hash) (
 	blockchain.BlockLocator, error) {
 

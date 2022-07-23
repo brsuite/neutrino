@@ -1,6 +1,6 @@
 PKG := github.com/brsuite/neutrino
 
-BTCD_PKG := github.com/brsuite/brond
+BROND_PKG := github.com/brsuite/brond
 LINT_PKG := github.com/golangci/golangci-lint/cmd/golangci-lint
 GOACC_PKG := github.com/ory/go-acc
 GOIMPORTS_PKG := golang.org/x/tools/cmd/goimports
@@ -21,8 +21,8 @@ GOLIST := go list -deps $(PKG)/... | grep '$(PKG)'
 GOLIST_COVER := $$(go list -deps $(PKG)/... | grep '$(PKG)')
 GOFILES_NOVENDOR = $(shell find . -type f -name '*.go' -not -path "./vendor/*")
 
-BTCD_COMMIT := $(shell cat go.mod | \
-		grep $(BTCD_PKG) | \
+BROND_COMMIT := $(shell cat go.mod | \
+		grep $(BROND_PKG) | \
 		head -n1 | \
 		awk -F " " '{ print $$2 }' | \
 		awk -F "/" '{ print $$1 }')
@@ -56,7 +56,7 @@ all: build check
 
 brond:
 	@$(call print, "Installing brond.")
-	$(DEPGET) $(BTCD_PKG)@$(BTCD_COMMIT)
+	$(DEPGET) $(BROND_PKG)@$(BROND_COMMIT)
 
 $(LINT_BIN):
 	@$(call print, "Fetching linter")

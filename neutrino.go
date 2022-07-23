@@ -41,11 +41,11 @@ var (
 	ConnectionRetryInterval = time.Second * 5
 
 	// UserAgentName is the user agent name and is used to help identify
-	// ourselves to other bitcoin peers.
+	// ourselves to other brocoin peers.
 	UserAgentName = "neutrino"
 
 	// UserAgentVersion is the user agent version and is used to help
-	// identify ourselves to other bitcoin peers.
+	// identify ourselves to other brocoin peers.
 	UserAgentVersion = "0.12.0-beta"
 
 	// Services describes the services that are supported by the server.
@@ -67,7 +67,7 @@ var (
 	// MaxPeers is the maximum number of connections the client maintains.
 	MaxPeers = 125
 
-	// DisableDNSSeed disables getting initial addresses for Bitcoin nodes
+	// DisableDNSSeed disables getting initial addresses for Brocoin nodes
 	// from DNS.
 	DisableDNSSeed = false
 
@@ -205,13 +205,13 @@ func (sp *ServerPeer) addKnownAddresses(addresses []*wire.NetAddress) {
 	}
 }
 
-// OnVerAck is invoked when a peer receives a verack bitcoin message and is used
+// OnVerAck is invoked when a peer receives a verack brocoin message and is used
 // to kick start communication with them.
 func (sp *ServerPeer) OnVerAck(_ *peer.Peer, msg *wire.MsgVerAck) {
 	sp.server.AddPeer(sp)
 }
 
-// OnVersion is invoked when a peer receives a version bitcoin message
+// OnVersion is invoked when a peer receives a version brocoin message
 // and is used to negotiate the protocol version details as well as kick start
 // the communications.
 func (sp *ServerPeer) OnVersion(_ *peer.Peer, msg *wire.MsgVersion) *wire.MsgReject {
@@ -252,7 +252,7 @@ func (sp *ServerPeer) OnVersion(_ *peer.Peer, msg *wire.MsgVersion) *wire.MsgRej
 	return nil
 }
 
-// OnInv is invoked when a peer receives an inv bitcoin message and is
+// OnInv is invoked when a peer receives an inv brocoin message and is
 // used to examine the inventory being advertised by the remote peer and react
 // accordingly.  We pass the message down to blockmanager which will call
 // QueueMessage with any appropriate responses.
@@ -283,7 +283,7 @@ func (sp *ServerPeer) OnInv(p *peer.Peer, msg *wire.MsgInv) {
 	}
 }
 
-// OnHeaders is invoked when a peer receives a headers bitcoin
+// OnHeaders is invoked when a peer receives a headers brocoin
 // message.  The message is passed down to the block manager.
 func (sp *ServerPeer) OnHeaders(p *peer.Peer, msg *wire.MsgHeaders) {
 	log.Tracef("Got headers with %d items from %s", len(msg.Headers),
@@ -291,7 +291,7 @@ func (sp *ServerPeer) OnHeaders(p *peer.Peer, msg *wire.MsgHeaders) {
 	sp.server.blockManager.QueueHeaders(msg, sp)
 }
 
-// OnFeeFilter is invoked when a peer receives a feefilter bitcoin message and
+// OnFeeFilter is invoked when a peer receives a feefilter brocoin message and
 // is used by remote peers to request that no transactions which have a fee rate
 // lower than provided value are inventoried to them.  The peer will be
 // disconnected if an invalid fee filter value is provided.
@@ -307,13 +307,13 @@ func (sp *ServerPeer) OnFeeFilter(_ *peer.Peer, msg *wire.MsgFeeFilter) {
 	atomic.StoreInt64(&sp.feeFilter, msg.MinFee)
 }
 
-// OnReject is invoked when a peer receives a reject bitcoin message and is
+// OnReject is invoked when a peer receives a reject brocoin message and is
 // used to notify the server about a rejected transaction.
 func (sp *ServerPeer) OnReject(_ *peer.Peer, msg *wire.MsgReject) {
 	// TODO(roaseef): log?
 }
 
-// OnAddr is invoked when a peer receives an addr bitcoin message and is
+// OnAddr is invoked when a peer receives an addr brocoin message and is
 // used to notify the server about advertised addresses.
 func (sp *ServerPeer) OnAddr(_ *peer.Peer, msg *wire.MsgAddr) {
 	// Ignore addresses when running on the simulation test network.  This
@@ -373,7 +373,7 @@ func (sp *ServerPeer) OnAddr(_ *peer.Peer, msg *wire.MsgAddr) {
 	// Add addresses to server address manager.  The address manager handles
 	// the details of things such as preventing duplicate addresses, max
 	// addresses, and last seen updates.
-	// XXX bitcoind gives a 2 hour time penalty here, do we want to do the
+	// XXX brocoind gives a 2 hour time penalty here, do we want to do the
 	// same?
 	sp.server.addrManager.AddAddresses(addrsSupportingServices, sp.NA())
 }
@@ -439,7 +439,7 @@ func (sp *ServerPeer) unsubscribeRecvMsgs(subscription spMsgSubscription) {
 // interface.
 var _ query.Peer = (*ServerPeer)(nil)
 
-// SubscribeRecvMsg adds a OnRead subscription to the peer. All bitcoin
+// SubscribeRecvMsg adds a OnRead subscription to the peer. All brocoin
 // messages received from this peer will be sent on the returned channel. A
 // closure is also returned, that should be called to cancel the subscription.
 //
@@ -616,7 +616,7 @@ type ChainService struct { // nolint:maligned
 }
 
 // NewChainService returns a new chain service configured to connect to the
-// bitcoin network type specified by chainParams.  Use start to begin syncing
+// brocoin network type specified by chainParams.  Use start to begin syncing
 // with peers.
 func NewChainService(cfg Config) (*ChainService, error) {
 	// Use the default broadcast timeout if one isn't provided.
@@ -1080,7 +1080,7 @@ func (s *ChainService) peerHandler() {
 					return
 				}
 
-				// Bitcoind uses a lookup of the dns seeder
+				// Brocoind uses a lookup of the dns seeder
 				// here. This is rather strange since the
 				// values looked up by the DNS seed lookups
 				// will vary quite a lot.  to replicate this

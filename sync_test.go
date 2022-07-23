@@ -188,7 +188,7 @@ var (
 	ourKnownTxsByFilteredBlock = make(map[chainhash.Hash][]*bronutil.Tx)
 )
 
-// secSource is an implementation of btcwallet/txauthor/SecretsSource that
+// secSource is an implementation of bronwallet/txauthor/SecretsSource that
 // stores WitnessPubKeyHash addresses.
 type secSource struct {
 	keys    map[string]*btcec.PrivateKey
